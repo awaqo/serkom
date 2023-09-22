@@ -114,8 +114,8 @@
                                 <td>
                                     :
                                 </td>
-                                <td class="px-6 py-4">
-                                    {{ isset($result->berkas) ? 'asd' : 'ddadasd' }}
+                                <td class="px-6 py-4 truncate">
+                                    {{ isset($result->berkas) ? $result->berkas : 'tidak ada' }}
                                 </td>
                             </tr>
                             <tr class="bg-white border-b">
