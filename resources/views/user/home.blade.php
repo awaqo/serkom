@@ -18,4 +18,33 @@
             </div>
         </div>
     </section>
+
+    <section class="bg-slate-100 px-20 py-20">
+        <div class="w-full flex justify-center gap-4">
+            <div class="bg-white p-8 w-full max-w-2xl shadow-md rounded-md">
+                <div class="text-center text-3xl font-bold">Beasiswa Akademik</div>
+                <hr class="mt-3">
+                <div class="text-xl font-bold mt-10">Syarat & Ketentuan</div>
+                <div>
+                    <ol class="pl-5 mt-2 space-y-3 list-decimal list-inside">
+                        <li>Siswa lulusan SMA/MA/SMK 4 tahun terakhir (2019, 2020, 2021 dan 2022)</li>
+                        <li>Biaya pembelian token pendaftaran sebesar 250.000 untuk 1 akun dan pendaftar dapat mengambil 3 pilihan program studi</li>
+                        <li>Tidak buta warna (Khusus pendaftar prodi D3 Teknik Telekomunikasi, S1 Teknik Telekomunikasi, S1 Teknik Elektro, S1 Desain Komunikasi Visual, dan S1 Desain Produk)</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="bg-white p-8 w-full max-w-2xl shadow-md rounded-md">
+                <div class="text-center text-3xl font-bold">Beasiswa Non-Akademik</div>
+                <hr class="mt-3">
+                <div class="text-xl font-bold mt-10">Syarat & Ketentuan</div>
+                <div>
+                    <ol class="pl-5 mt-2 space-y-3 list-decimal list-inside">
+                        <li>Siswa/Siswi SMA/SMK/MA lulusan tahun 2023</li>
+                        <li>Memiliki nilai rapor Kelas X (semester 1 dan 2), Kelas XI (semester 1 dan 2), dan Kelas XII (semester 1 saja), dengan nilai rata-rata minimal 8</li>
+                        <li>Sertifikat dan atau surat keterangan dari sekolah Pernah atau sedang menjabat sebagai ketua organisasi kesiswaan, seperti OSIS, PMR, KIR, Pramuka, dan organisasi kesiswaan lainnya yang ada di masing-masing sekolah</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

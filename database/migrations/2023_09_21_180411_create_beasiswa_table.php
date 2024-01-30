@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('beasiswa', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('no_hp');
             $table->integer('semester');
             $table->float('ipk', 3,2);

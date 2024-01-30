@@ -21,9 +21,7 @@ class BeasiswaController extends Controller
      */
     public function create()
     {
-        $ipk = rand(20,40);
-        $ipk /= 10;
-        return view('user.reg-beasiswa', compact('ipk'));
+        return view('user.reg-beasiswa');
     }
 
     /**
@@ -49,9 +47,30 @@ class BeasiswaController extends Controller
 
     public function show()
     {
-        $result = Beasiswa::all()->last();
+        $beasiswa = [
+            'Akademik',
+            'Non Akademik'
+        ];
+
+        $beasiswaCounts = [
+            'Akademik' => 0,
+            'Non Akademik' => 0
+        ];
+
+        foreach ($beasiswa as $b) {
+            $data = Beasiswa::where('pilihan_beasiswa', $b)->count();
+            $beasiswaCounts[$b] += $data;
+        }
+
+        $result = Beasiswa::where('pilihan_beasiswa', '!=', null)->get();
         $count = Beasiswa::get()->count();
+        // dd($beasiswaCounts);
         // dd($count);
-        return view('user.result', compact('result', 'count'));
+        return view('user.result', compact('result', 'count', 'beasiswaCounts', 'beasiswa'));
+    }
+
+    public function checkEmail(Request $request) {
+        $data = Beasiswa::where('email', $request->email)->first();
+        return response()->json($data);
     }
 }

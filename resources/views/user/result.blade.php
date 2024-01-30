@@ -11,7 +11,7 @@
             <div class="text-3xl font-bold text-center">Hasil Pendaftaran Beasiswa</div>
         </div>
 
-        <div class="px-12">
+        <div class="px-24">
             {{-- alert --}}
             @if ($message = Session::get('success'))
             <div class="mt-8">
@@ -38,99 +38,66 @@
                     Belum ada data
                 </div>
             @else
-                <div class="w-full max-w-2xl py-6">
-                    <table class="w-full text-sm text-left text-gray-500 shadow-lg shadow-blue-100">
-                        <tbody>
-                            <tr class="bg-white border-b">
-                                <td class="pl-8 py-4 font-bold text-gray-900">
+
+                <div class="w-full mt-5 flex justify-center">
+                    <div class="w-1/4">
+                        <canvas id="beasiswaChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="relative overflow-x-auto py-8">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
                                     Nama
-                                </td>
-                                <td>
-                                    :
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $result->nama }}
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                                <td class="pl-8 py-4 font-bold text-gray-900">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Email
-                                </td>
-                                <td>
-                                    :
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $result->email }}
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                                <td class="pl-8 py-4 font-bold text-gray-900">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Nomor HP
-                                </td>
-                                <td>
-                                    :
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $result->no_hp }}
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                                <td class="pl-8 py-4 font-bold text-gray-900">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Semester
-                                </td>
-                                <td>
-                                    :
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $result->semester }}
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                                <td class="pl-8 py-4 font-bold text-gray-900">
-                                    IPK Terakhir
-                                </td>
-                                <td>
-                                    :
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $result->ipk }}
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                                <td class="pl-8 py-4 font-bold text-gray-900">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    IPK
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Pilihan Beasiswa
-                                </td>
-                                <td>
-                                    :
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $result->pilihan_beasiswa }}
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                                <td class="pl-8 py-4 font-bold text-gray-900">
-                                    Berkas
-                                </td>
-                                <td>
-                                    :
-                                </td>
-                                <td class="px-6 py-4 truncate">
-                                    {{ isset($result->berkas) ? $result->berkas : 'tidak ada' }}
-                                </td>
-                            </tr>
-                            <tr class="bg-white border-b">
-                                <td class="pl-8 py-4 font-bold text-gray-900">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Status Ajuan
-                                </td>
-                                <td>
-                                    :
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="bg-yellow-100 text-yellow-800 text-sm font-bold mr-2 px-2.5 py-0.5 rounded">
-                                        {{ $result->status_ajuan }}
-                                    </span>
-                                </td>
+                                </th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($result as $item)
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-4">
+                                        {{ $item->nama }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->email }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->no_hp }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->semester }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->ipk }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->pilihan_beasiswa }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $item->status_ajuan }}
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -138,3 +105,32 @@
         </div>
     </section>    
 @endsection
+
+{{-- {{ dd(array_keys($beasiswaCounts)) }} --}}
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        var beasiswaData = {{ json_encode(array_values($beasiswaCounts)) }};
+        var beasiswaLabels = [
+            'Akademik',
+            'Non Akademik'
+        ];
+        var ctx = document.getElementById('beasiswaChart').getContext('2d');
+
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: beasiswaLabels,
+                datasets: [{
+                    data: beasiswaData,
+                    backgroundColor: ['#007bff', '#28a745'],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+@endpush
